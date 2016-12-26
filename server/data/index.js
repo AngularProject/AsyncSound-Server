@@ -9,8 +9,11 @@ module.exports = function (config) {
     // Override mongoose Promise, because it is depricated.
     mongoose.Promise = global.Promise;
     mongoose.connect(config.connectionString);
+    
     const User = require("../models/user-model.js");
-    const models = { User };
+    const Playlist = require("../models/playlist-model.js");
+
+    const models = { User, Playlist };
     const data = {};
 
     // It finds all properties
