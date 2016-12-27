@@ -1,9 +1,28 @@
 /* globals module require */
 "use strict";
 
+const encrypt = require('../utils/encrypt');
 
 module.exports = function({ data, passport }) {
     return {
+        registerUser(req, res) {
+            let body = req.body;
+
+            data.isUsernameExist(body.username)
+                .then(() => {
+                    const salt = encrypt.generateSalt();
+                    body.salt = salt,
+                    body.passHash = encrypt.hashPassword(salt, req.body.password || encrypt.genenerateRandomPassword());
+                    
+                    return data.createUser(body);
+                })
+                .then(regUser => {
+                    res.status(200).json(regUser);
+                })
+                .catch((err) => {
+                    res.status(200).json({ message: `User with username "${err}" already exists.` });                    
+                });
+        },
         loginUser(req, res, next) {
             const auth = passport.authenticate('local', (error, user) => {
                 if (error) {
@@ -32,6 +51,13 @@ module.exports = function({ data, passport }) {
         isAuthenticated(req, res, next) {
             if (!req.isAuthenticated()) {
                 return res.status(403).send("unauthorized");
+            }
+
+            next();
+        },
+        isNotAuthenticated(req, res, next) {
+            if (req.isAuthenticated()) {
+                return res.status(403).send("you are logged");
             }
 
             next();
