@@ -7,8 +7,11 @@ module.exports = function() {
             res.redirect("/home");
         },
         loadHomePage(req, res) {
+            const user = {
+                isLogged : !!req.isAuthenticated()
+            };
 
-            res.render("index");
+            res.status(200).send(user);
         }
     };
 };
