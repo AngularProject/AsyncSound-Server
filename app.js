@@ -14,6 +14,18 @@ const adminUser = {
     lastname: "sound",
 };
 
+// const playlist = {
+//     title: "AsyncSound",
+//     creator: "admin",
+//     createdOn: Date.now(),
+//     isPublic: "false"
+// };
+
+// const update = {
+//     id : "58612df51266cc195c23e45d",
+//     user : "moderator"
+// };
+
 data.getUserByUsername("admin")
     .then((user) => {
         console.log(user);
@@ -21,6 +33,11 @@ data.getUserByUsername("admin")
     .catch(() => {
         data.createUser(adminUser);
     });
+
+// data.removeUserFromPlaylist(update)
+//     .then(res => {
+//         console.log(res);
+//     });
 // ====================
 
 app.listen(config.port, () => {
