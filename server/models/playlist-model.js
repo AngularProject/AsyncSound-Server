@@ -9,6 +9,8 @@ const playlistSchema = new mongoose.Schema({
     createdOn: {type: Date, default: Date.now},
     songs: [String],
     users: [String],
+    voteUp: [String],
+    voteDown: [String],
     comments: [{
         content: String,
         author: String,
@@ -39,6 +41,19 @@ playlistSchema.methods.isUserAddedPlaylist = function(username) {
     return isUserExist;
 };
 
+playlistSchema.methods.isUserVoteUpPlaylist = function(username) {
+    let isUserVote = this.voteUp.includes(username);
+
+    return isUserVote;   
+};
+
+playlistSchema.methods.isUserVoteDownPlaylist = function(username) {
+    let isUserVote = this.voteDown.includes(username);
+
+    return isUserVote;   
+};
+
+// // WRONG CHECK
 playlistSchema.methods.isUserLikedComment = function(username) {
     // let isUserExist = this.comments.map((x)=> x.likedBy.includes(username));
 
@@ -55,6 +70,7 @@ playlistSchema.methods.isUserLikedComment = function(username) {
     return isUserExist;    
 };
 
+// WRONG CHECK
 playlistSchema.methods.isUserDislikedComment = function(username) {
     let isUserExist = false;
 
