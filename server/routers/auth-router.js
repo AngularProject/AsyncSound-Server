@@ -22,7 +22,7 @@ module.exports = function({ app, data }) {
             </form>
         `))
         .post("/login", authController.loginUser)
-        .post("/logout", authController.logoutUser);
+        .post("/logout", authController.isAuthenticated, authController.logoutUser);
 
     app.use("/auth", router);
 };
