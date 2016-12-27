@@ -2,6 +2,7 @@
 "use strict";
 
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -18,6 +19,13 @@ module.exports = function({ data }) {
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(session({
+        secret: "evastuposfail",
+        resave: true,
+        saveUninitialized: true
+    }));
+
+    require("./passport")({app, data});
 
     return app;
 };
