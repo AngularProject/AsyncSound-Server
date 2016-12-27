@@ -7,17 +7,9 @@ module.exports = function(models) {
     return {
         createUser(userInfo) {
 
-            const user = new User({
-                username: userInfo.username,
-                email: userInfo.email,
-                password: userInfo.password,
-                firstname: userInfo.firstname,
-                lastname: userInfo.lastname,
-            });
-
             return new Promise((resolve, reject) => {
 
-                User.create(user, (err, user) => {
+                User.create(userInfo, (err, user) => {
                     if (err) {
                         return reject(err);
                     }
@@ -36,6 +28,24 @@ module.exports = function(models) {
                     }
 
                     if (!user) {
+
+                        return reject(username);
+                    }
+
+                    return resolve(user);
+                });
+            });
+        },
+        isUsernameExist(username) {
+            return new Promise((resolve, reject) => {
+
+                User.findOne({ username: username }, (err, user) => {
+                    if (err) {
+
+                        return reject(err);
+                    }
+
+                    if (user) {
 
                         return reject(username);
                     }
