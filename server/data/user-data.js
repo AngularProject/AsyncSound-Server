@@ -36,21 +36,22 @@ module.exports = function(models) {
                 });
             });
         },
-        isUsernameExist(username) {
+        isUsernameExist(userData) {
             return new Promise((resolve, reject) => {
 
-                User.findOne({ username: username }, (err, user) => {
+                User.findOne({ username: userData.username }, (err, user) => {
                     if (err) {
 
                         return reject(err);
                     }
 
+                    let isExist = false;
+                    
                     if (user) {
-
-                        return reject(username);
+                        isExist = true;
                     }
 
-                    return resolve(user);
+                    return resolve({isExist, userData});
                 });
             });
         }
