@@ -8,29 +8,35 @@ module.exports = function({ data, passport }) {
         registerUser(req, res) {
             let body = req.body;
 
-            data.isUsernameExist(body.username)
-                .then(() => {
-                    const salt = encrypt.generateSalt();
-                    body.salt = salt,
-                    body.passHash = encrypt.hashPassword(salt, req.body.password || encrypt.genenerateRandomPassword());
+            data.isUsernameExist(body)
+                .then( result => {
+                    let user = result.userData;
                     
-                    return data.createUser(body);
+                    if(result.isExist) {
+                        res.status(402).json({ error: "Username already exist" });
+                    }
+
+                    const salt = encrypt.generateSalt();
+                    user.salt = salt,
+                    user.passHash = encrypt.hashPassword(salt, user.password || encrypt.genenerateRandomPassword());
+
+                    return data.createUser(user);
                 })
                 .then(regUser => {
                     res.status(200).json(regUser);
                 })
                 .catch((err) => {
-                    res.status(200).json({ message: `User with username "${err}" already exists.` });                    
+                    res.status(402).json({ error: err });                    
                 });
         },
         loginUser(req, res, next) {
-            const auth = passport.authenticate('local', (error, user) => {
+            const auth = passport.authenticate("local", (error, user) => {
                 if (error) {
-                    return next(error);
+                    return res.status(402).json({ error: true, message: 'Invalid username or password!' });
                 }
 
                 if (!user) {
-                    return res.status(400).json({ success: false, msg: 'Invalid username or password!' });
+                    return res.status(402).json({ error: true, message: 'Invalid username or password!' });
                 }
 
                 req.logIn(user, error => {
@@ -38,7 +44,7 @@ module.exports = function({ data, passport }) {
                         return next(error);
                     }
 
-                    return res.status(200).json({ success: true, msg: `Welcome, ${user.username}` });
+                    return res.status(200).json(user);
                 });
             });
 
