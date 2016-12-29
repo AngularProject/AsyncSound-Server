@@ -30,7 +30,7 @@ module.exports = function({ app, data }) {
                 <input type="text" name="lastname" placeholder="Lastname">
                 <input type="submit" value="Sing up">
             </form>`))
-        .post("/register", authController.isAuthenticated, authController.registerUser)
+        .post("/register", authController.isNotAuthenticated, authController.registerUser)
         .post("/login", authController.loginUser)
         .post("/logout", authController.isAuthenticated, authController.logoutUser);
 
