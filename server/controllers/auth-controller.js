@@ -23,7 +23,7 @@ module.exports = function({ data, passport }) {
                     return data.createUser(user);
                 })
                 .then(() => {
-                    res.redirect(307, "./login");
+                    res.status(200).json({ succes: true, message: "Now you are registered" });
                 })
                 .catch((err) => {
                     res.status(402).json({ error: err });                    
