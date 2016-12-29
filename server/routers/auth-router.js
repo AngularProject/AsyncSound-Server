@@ -16,11 +16,6 @@ module.exports = function({ app, data }) {
                 <input type="submit" value="Login">
             </form>
         `))
-        .get("/logout", (req, res) => res.status(200).send(`
-            <form action="/auth/logout" method="POST">
-                <input type="submit" value="logout">
-            </form>
-        `))
         .get("/register", (req, res) => res.status(200).send(`            
             <form action="/auth/register" method="POST">
                 <input type="text" name="username" placeholder="Username">
@@ -30,9 +25,9 @@ module.exports = function({ app, data }) {
                 <input type="text" name="lastname" placeholder="Lastname">
                 <input type="submit" value="Sing up">
             </form>`))
+        .get("/logout", authController.logoutUser)        
         .post("/register", authController.isNotAuthenticated, authController.registerUser)
-        .post("/login", authController.loginUser)
-        .post("/logout", authController.isAuthenticated, authController.logoutUser);
+        .post("/login", authController.loginUser);
 
     app.use("/auth", router);
 };
