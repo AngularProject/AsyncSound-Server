@@ -4,8 +4,8 @@
   "description": "music",
   "main": "index.js",
   "scripts": {
-    "server": "npm run server:dev",
-    "start": "npm run server:dev"
+    "server": "./node_modules/.bin/nodemon app.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
