@@ -11,7 +11,7 @@ module.exports = function({ data, passport }) {
             data.isUsernameExist(body)
                 .then( result => {
                     let user = result.userData;
-                    
+
                     if(result.isExist) {
                         res.status(402).json({ error: "Username already exist" });
                     }
@@ -43,7 +43,7 @@ module.exports = function({ data, passport }) {
                     if (error) {
                         return next(error);
                     }
-
+                    
                     return res.status(200).json(user);
                 });
             });
