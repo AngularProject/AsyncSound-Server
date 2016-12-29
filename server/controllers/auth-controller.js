@@ -11,7 +11,7 @@ module.exports = function({ data, passport }) {
             data.isUsernameExist(body)
                 .then( result => {
                     let user = result.userData;
-                    
+
                     if(result.isExist) {
                         res.status(402).json({ error: "Username already exist" });
                     }
@@ -22,8 +22,8 @@ module.exports = function({ data, passport }) {
 
                     return data.createUser(user);
                 })
-                .then(regUser => {
-                    res.status(200).json(regUser);
+                .then(() => {
+                    res.redirect(307, "./login");
                 })
                 .catch((err) => {
                     res.status(402).json({ error: err });                    
