@@ -13,7 +13,6 @@ module.exports = function(passport, data) {
         data.getUserByUsername(username)
             .then(user => {
                 if (user && authenticate(user, password)) {
-                // if(user && (user.password === password)) {
                     return done(null, user);
                 }
 
