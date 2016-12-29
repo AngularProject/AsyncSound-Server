@@ -3,7 +3,6 @@
 
 const express = require("express");
 const session = require("express-session");
-const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -19,7 +18,7 @@ module.exports = function({ data }) {
         next();
     });
 
-    app.options("*", cors);
+    app.options("*", cors());
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
