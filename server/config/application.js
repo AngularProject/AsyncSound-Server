@@ -4,6 +4,7 @@
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const rootPath = path.normalize(path.join(__dirname, '/../../'));
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -29,7 +30,7 @@ module.exports = function({ data }) {
         saveUninitialized: true
     }));
 
-
+    app.use('/static', express.static(rootPath + '/public'));
 
     require("./passport")({ app, data });
 

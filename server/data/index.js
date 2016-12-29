@@ -16,6 +16,14 @@ module.exports = function (config) {
     const models = { User, Playlist };
     const data = {};
 
+    let db = mongoose.connection;
+    db.once('open', (err) => {
+        if (err) {
+            console.log(err);
+        }
+
+        console.log('Mongo connected!');
+    });
     // It finds all properties
     // of the data models and hang them to "data"
     fs.readdirSync("./server/data")

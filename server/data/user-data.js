@@ -3,7 +3,6 @@
 
 module.exports = function(models) {
     const { User } = models;
-
     return {
         createUser(userInfo) {
 
@@ -17,7 +16,7 @@ module.exports = function(models) {
                     return resolve(user);
                 });
             });
-        },        
+        },
         getUserByUsername(username) {
             return new Promise((resolve, reject) => {
 
@@ -52,6 +51,21 @@ module.exports = function(models) {
 
                     return resolve(user);
                 });
+            });
+        },
+        uploadAvatar(username, img) {
+            this.getUserByUsername(username)
+                .then(user => {
+                    user.avatar = img;
+                    user.save();
+                });
+        },
+        getAvatar(username) {
+            return new Promise((resolve, reject) => {
+                this.getUserByUsername(username)
+                    .then(user => {
+                        resolve(user.avatar);
+                    })
             });
         }
     };
