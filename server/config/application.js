@@ -6,16 +6,20 @@ const session = require("express-session");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 module.exports = function({ data }) {
     const app = express();
 
-    app.set('view engine', 'pug');
-    app.set('views', './server/views');
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        next();
+    });
 
-    app.use('/libraries', express.static(path.resolve(__dirname + '/../../node_modules')));
-    app.use('/static', express.static(path.resolve(__dirname + '/../../public')));
-
+    app.options("*", cors);
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,7 +29,9 @@ module.exports = function({ data }) {
         saveUninitialized: true
     }));
 
-    require("./passport")({app, data});
+
+
+    require("./passport")({ app, data });
 
     return app;
 };
