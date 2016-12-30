@@ -20,7 +20,7 @@ module.exports = function({ data }) {
         next();
     });
 
-    app.options("*", cors);
+    app.options("*", cors());
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
