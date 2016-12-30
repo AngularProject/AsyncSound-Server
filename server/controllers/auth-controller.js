@@ -13,7 +13,7 @@ module.exports = function({ data, passport }) {
                     let user = result.userData;
 
                     if(result.isExist) {
-                        res.status(402).json({ error: "Username already exist" });
+                        res.status(200).json({ error: "Username already exist" });
                     }
 
                     const salt = encrypt.generateSalt();
@@ -32,11 +32,11 @@ module.exports = function({ data, passport }) {
         loginUser(req, res, next) {
             const auth = passport.authenticate("local", (error, user) => {
                 if (error) {
-                    return res.status(402).json({ error: true, message: 'Invalid username or password!' });
+                    return res.status(200).json({ error: true, message: 'Invalid username or password!' });
                 }
 
                 if (!user) {
-                    return res.status(402).json({ error: true, message: 'Invalid username or password!' });
+                    return res.status(200).json({ error: true, message: 'Invalid username or password!' });
                 }
 
                 req.logIn(user, error => {
