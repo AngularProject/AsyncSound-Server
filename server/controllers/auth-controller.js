@@ -13,7 +13,7 @@ module.exports = function({ data, passport }) {
                     let user = result.userData;
 
                     if(result.isExist) {
-                        res.status(200).json({ error: "Username already exist" });
+                        res.status(200).json({ error: true, message:"Username already exist" });
                     }
 
                     const salt = encrypt.generateSalt();
@@ -26,7 +26,7 @@ module.exports = function({ data, passport }) {
                     res.status(200).json({ succes: true, message: "Now you are registered" });
                 })
                 .catch((err) => {
-                    res.status(402).json({ error: err });                    
+                    res.status(402).json({ error: true, message: err });                    
                 });
         },
         loginUser(req, res, next) {
