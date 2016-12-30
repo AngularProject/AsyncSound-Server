@@ -3,24 +3,6 @@
 
 module.exports = function({ data }) {
     return {
-        createUser(req, res) {
-            const user = {
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password,
-                firstname: req.body.firstname,
-                lastname: req.body.lastname
-            };
-            console.log(req.body);
-            data.createUser(user)
-                .then(() => {
-                    res.redirect(307, "/home");
-                })
-                .catch(err => {
-                    res.status(404)
-                        .send(`REGISTER FAIL, TRY AGAIN ===>${err}`);
-                });
-        },
         getUserByUsername(req, res) {
             data.getUserByUsername(req.params.name)
                 .then(user => {
@@ -28,11 +10,41 @@ module.exports = function({ data }) {
                         .json(user);
                 })
                 .catch(err => {
+                    const message = `Username: ${err} doesn't exist `;
+                    
                     res.status(404)
-                        .send(`USER ${err} DOESN'T EXIST`);
+                        .json({error: true, message : message });
                 });
         },
+        getSongById(req, res) {
+            data.getSongById(req.params.id)
+                .then(song => {
+                    res.status(200)
+                        .json(song);
+                })
+                .catch(err => {
+                    const message = `Category: ${err} doesn't exist `;
+                    
+                    res.status(404)
+                        .json({error: true, message : message });
+                });
+        },
+        getSongByCategory(req,res) {
+            const string = req.params.name;
+            const category = new RegExp(["^", string, "$"].join(""), "i");
+            
+            data.getSongsByCategory(category)
+                .then(songs => {
+                    res.status(200)
+                        .json(songs);
+                })
+                .catch((err) => {
+                    const message = `Song: ${err} doesn't exist `;
 
+                    res.status(404)
+                        .json({error: true, message : message });
+                });
+        },
         uploadAvatar(req, res, img) {
             let username = req.body.username;
 

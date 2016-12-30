@@ -12,8 +12,9 @@ module.exports = function (config) {
     
     const User = require("../models/user-model.js");
     const Playlist = require("../models/playlist-model.js");
+    const Song = require("../models/song-model.js");
 
-    const models = { User, Playlist };
+    const models = { User, Playlist, Song };
     const data = {};
 
     let db = mongoose.connection;
