@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String },
     firstname: { type: String, validate: /[a-zA-Z]+/, required: true },
     lastname: { type: String, validate: /[a-zA-Z]+/, required: true },
+    avatar: { type: String, default: "default-avatar.png" }
 });
 
 mongoose.model("user", userSchema);

@@ -11,7 +11,7 @@ module.exports = function({ data }) {
                 firstname: req.body.firstname,
                 lastname: req.body.lastname
             };
-                
+            console.log(req.body);
             data.createUser(user)
                 .then(() => {
                     res.redirect(307, "/home");
@@ -30,6 +30,21 @@ module.exports = function({ data }) {
                 .catch(err => {
                     res.status(404)
                         .send(`USER ${err} DOESN'T EXIST`);
+                });
+        },
+
+        uploadAvatar(req, res, img) {
+            let username = req.body.username;
+
+            data.uploadAvatar(username, img);
+        },
+
+        getAvatar(req, res) {
+            let username = req.body.username;
+
+            data.getAvatar(username)
+                .then(result => {
+                    res.status(200).send(result);
                 });
         }
     };
