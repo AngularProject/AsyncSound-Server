@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     salt: { type: String, required: true },
     passHash: { type: String, required: true },
     email: { type: String },
+    roles: { type: [String] },
     firstname: { type: String, validate: /[a-zA-Z]+/, required: true },
     lastname: { type: String, validate: /[a-zA-Z]+/, required: true },
     avatar: { type: String, default: "default-avatar.png" }
