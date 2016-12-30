@@ -45,12 +45,12 @@ module.exports = function(models) {
                     }
 
                     let isExist = false;
-                    
+
                     if (user) {
                         isExist = true;
                     }
 
-                    return resolve({isExist, userData});
+                    return resolve({ isExist, userData });
                 });
             });
         },
@@ -67,6 +67,17 @@ module.exports = function(models) {
                     .then(user => {
                         resolve(user.avatar);
                     })
+            });
+        },
+        findUserAndUpdate(options, userToUpdate) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate(userToUpdate, options, (err, foundUser) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(foundUser);
+                });
             });
         }
     };
