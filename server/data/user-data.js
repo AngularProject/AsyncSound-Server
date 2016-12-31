@@ -90,6 +90,22 @@ module.exports = function(models) {
                     return resolve(found);
                 });
             });
+        },
+        getUserById(id) {
+            return new Promise((resolve, reject) => {
+
+                User.findOne({ _id: id }, (err, user) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!user) {
+                        return reject(id);
+                    }
+
+                    return resolve(user);
+                });
+            });
         }
     };
 };
