@@ -79,6 +79,17 @@ module.exports = function(models) {
                     return resolve(foundUser);
                 });
             });
+        },
+        getAllAdmins() {
+            return new Promise((resolve, reject) => {
+                User.find({ "roles": "admin" }, (err, found) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(found);
+                });
+            });
         }
     };
 };

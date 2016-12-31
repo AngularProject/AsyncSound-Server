@@ -12,6 +12,6 @@ module.exports = ({ app, data, validator }) => {
                             <button type="submit" name="action">Submit                
                             </button>
                         </form>`));
-
-    app.post("/user-role", adminController.setUserAsAdmin)
+    app.get('/all-admins', adminController.getAllAdmins);
+    app.post("/user-role", adminController.setUserAsAdmin);
 }

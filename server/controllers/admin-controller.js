@@ -12,6 +12,12 @@ module.exports = function({ data }) {
                 .then((user) => {
                     res.status(200).json({ succes: true, message: `Added role to ${user.username} successfully!` });
                 });
+        },
+        getAllAdmins(req, res) {
+            return data.getAllAdmins()
+                .then((admins) => {
+                    res.status(200).json(admins);
+                })
         }
     }
 };
