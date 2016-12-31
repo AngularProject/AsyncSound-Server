@@ -26,8 +26,8 @@ module.exports = function({ app, data }) {
 
     router
         .get("/user/:name", apiController.getUserByUsername)
-        .get('/user/:username/avatar', apiController.getAvatar)
-		.post('/user/avatar', uploadAvatar.any(), (req, res) => {
+        .get('/avatar/:username', apiController.getAvatar)
+		.post('/avatar', uploadAvatar.any(), (req, res) => {
             apiController.uploadAvatar(req, res, img);
         })
 

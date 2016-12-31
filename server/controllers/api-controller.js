@@ -58,13 +58,13 @@ module.exports = function({ data }) {
                 });
         },
         uploadAvatar(req, res, img) {
-            let username = req.body.username;
+            let username = req.params.username;
 
             data.uploadAvatar(username, img);
         },
 
         getAvatar(req, res) {
-            let username = req.body.username;
+            let username = req.params.username;
 
             data.getAvatar(username)
                 .then(result => {

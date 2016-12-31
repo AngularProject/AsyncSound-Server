@@ -59,14 +59,21 @@ module.exports = function(models) {
                 .then(user => {
                     user.avatar = img;
                     user.save();
+                })
+                .catch(err => {
+                    return err;
                 });
         },
         getAvatar(username) {
+            console.log("Called get avatar service");
             return new Promise((resolve, reject) => {
                 this.getUserByUsername(username)
                     .then(user => {
                         resolve(user.avatar);
                     })
+                    .catch(err => {
+                        reject(err);
+                    });
             });
         },
         findUserAndUpdate(options, userToUpdate) {
