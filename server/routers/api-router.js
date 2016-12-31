@@ -30,8 +30,10 @@ module.exports = function({ app, data }) {
 		.post('/user/avatar', uploadAvatar.any(), (req, res) => {
             apiController.uploadAvatar(req, res, img);
         })
+
         .get('/songs/:id', apiController.getSongById)
-        .get('/songs/category/:name', apiController.getSongByCategory);
+        .get('/songs/category/:name', apiController.getSongByCategory)
+        .get('/songs/', apiController.getAllSongs);
 
     app.use("/api", router);
 };

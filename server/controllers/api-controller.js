@@ -45,6 +45,18 @@ module.exports = function({ data }) {
                         .json({error: true, message : message });
                 });
         },
+        getAllSongs(req,res) {
+            data.getAllSongs()
+                .then(songs => {
+                    res.status(200)
+                        .json(songs);
+                })
+                .catch((err) => {
+                    
+                    res.status(404)
+                        .json({error: true, message : err });
+                });
+        },
         uploadAvatar(req, res, img) {
             let username = req.body.username;
 

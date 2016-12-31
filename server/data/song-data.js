@@ -41,6 +41,24 @@ module.exports = function(models) {
                 });
             });
         },
+        getAllSongs() {
+            return new Promise((resolve, reject) => {
+
+                Song.find({}, (err, songs) => {
+                    if (err) {
+
+                        return reject(err);
+                    }
+
+                    if (songs.length == 0) {
+
+                        return reject("Songs are missing");
+                    }
+
+                    return resolve(songs);
+                });
+            });
+        },
         createManySongs(songCollection) {
             let songs = [];
 
