@@ -8,7 +8,7 @@ module.exports = function({ app, data }) {
     const router = express.Router();
 
     router
-        .get("/profile?:id", profileController.loadProfilePage);
+        .get("/profile/:id", profileController.loadProfilePage);
 
     app.use("/", router);
 };
