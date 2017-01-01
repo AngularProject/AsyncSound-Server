@@ -16,13 +16,20 @@ const adminUser = {
     lastname: "sound",
 };
 
-// const playlist = {
-//     title: "AsyncSound",
-//     creator: "admin",
-//     createdOn: Date.now(),
-//     isPublic: "false"
-// };
+const playlist = {
+    title: "AsyncSound",
+    creator: "admin",
+    createdOn: Date.now(),
+    isPublic: "false"
+};
 
+data.getPlaylistByCreator("admin")
+    .then(playlist => {
+        console.log(playlist);
+    })
+    .catch(()=> {
+        data.createPlaylist(playlist);
+    });
 // const update = {
 //     id : "58612df51266cc195c23e45d",
 //     user : "moderator"
@@ -36,13 +43,13 @@ data.getUserByUsername("admin")
         data.createUser(adminUser);
     });
 
-data.getSongsByCategory("bass")
-    .then(song => {
-        console.log(song);
-    })
-    .catch(() => {
-        data.createManySongs(songs);
-    });
+// data.getSongsByCategory("bass")
+//     .then(song => {
+//         console.log(song);
+//     })
+//     .catch(() => {
+//         data.createManySongs(songs);
+//     });
 // data.removeUserFromPlaylist(update)
 //     .then(res => {
 //         console.log(res);
