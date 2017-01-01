@@ -33,7 +33,10 @@ module.exports = function({ app, data }) {
 
         .get('/songs/:id', apiController.getSongById)
         .get('/songs/category/:name', apiController.getSongByCategory)
-        .get('/songs/', apiController.getAllSongs);
+        .get('/songs/', apiController.getAllSongs)
+
+        .get('/playlists/:creator', apiController.getPlaylistByUsername)
+        .post('/playlists', apiController.addSongToPlaylist);
 
     app.use("/api", router);
 };
