@@ -14,4 +14,5 @@ module.exports = ({ app, data, validator }) => {
                         </form>`));
     app.get('/all-admins', adminController.getAllAdmins);
     app.post("/user-role", adminController.setUserAsAdmin);
+    app.post("/remove-role", adminController.removeAdmin);
 }
