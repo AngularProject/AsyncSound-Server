@@ -47,6 +47,24 @@ module.exports = function(models) {
                 });
             });
         },
+        getPlaylistByCreator(creator) {
+            return new Promise((resolve, reject) => {
+
+                Playlist.find({ "creator": creator }, (err, playlist) => {
+                    if (err) {
+
+                        return reject(err);
+                    }
+
+                    if (playlist.length === 0) {
+
+                        return reject(playlist);
+                    }
+
+                    return resolve(playlist);
+                });
+            });
+        },
         addSongToPlaylist(info) {
 
             const id = { _id : info.id};
