@@ -18,6 +18,15 @@ module.exports = function({ data }) {
                 .then((admins) => {
                     res.status(200).json(admins);
                 })
+        },
+        removeAdmin(req, res) {
+            let query = { username: req.body.username };
+            let updateObject = { $pull: { roles: "admin" } };
+
+            return data.findUserAndUpdate(updateObject, query)
+                .then((user) => {
+                    res.status(200).json({ succes: true, message: `Removed role to ${user.username} successfully!` });
+                });
         }
     }
 };
