@@ -23,6 +23,25 @@ module.exports = function(models) {
                 });
             });
         },
+        getSongByTitle(songTitle) {
+
+            return new Promise((resolve, reject) => {
+
+                Song.find({ "title": songTitle }, (err, song) => {
+                    if (err) {
+
+                        return reject(err);
+                    }
+
+                    if (song.length === 0) {
+
+                        return reject(false);
+                    }
+
+                    return resolve(song);
+                });
+            });
+        },
         getSongsByCategory(category) {
             return new Promise((resolve, reject) => {
 
