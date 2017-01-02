@@ -4,8 +4,8 @@
 module.exports = function({ data }) {
     return {
         loadProfilePage(req, res) {
-            let id = req.params.id;
-            return data.getUserById(id)
+            let username = req.params.username;
+            return data.getUserByUsername(username)
                 .then(user => {
                     res.status(200).json(user);
                 })

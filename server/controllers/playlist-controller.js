@@ -25,6 +25,22 @@ module.exports = function({ data }) {
                 .then(playlists => {
                     res.status(200).json(playlists);
                 });
+        },
+        pinPlaylist(req, res) {
+            let user = req.body.user;
+            let id = req.body.playlist._id;
+            // console.log("HERE");
+            // console.log(req.body);
+            let info = {
+                user,
+                id
+            };
+
+            return data.addUserToPlaylist(info)
+                .then((playlist) => {
+                    console.log(playlist);
+                    res.status(200).json({ succes: true, message: "Playlist pinned" });
+                })
         }
     };
 };
