@@ -32,6 +32,7 @@ module.exports = function({ app, data }) {
         })
 
         .get('/songs/:id', apiController.getSongById)
+        .get('/songs/search/:title', apiController.getSongByTitle)        
         .get('/songs/category/:name', apiController.getSongByCategory)
         .get('/songs/', apiController.getAllSongs)
 
