@@ -57,6 +57,32 @@ module.exports = function({ data }) {
                         .json({error: true, message : err });
                 });
         },
+        getPlaylistByUsername(req, res) {
+            const username = req.params.creator;
+
+            data.getPlaylistByCreator(username)
+                .then(playlists => {
+                    res.status(200)
+                        .json(playlists);
+                })
+                .catch(err => {
+                    res.status(404)
+                        .json({error: true, message : err });
+                });
+        },
+        addSongToPlaylist(req,res) {
+            const body = req.body;
+
+            data.addSongToPlaylist(body)
+                .then(playlist => {
+                    res.status(200)
+                        .json(playlist);
+                })
+                .catch(err => {
+                    res.status(404)
+                        .json({error: true, message : err });
+                });
+        },
         uploadAvatar(req, res, img) {
             let username = req.params.username;
 

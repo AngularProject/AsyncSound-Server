@@ -7,7 +7,11 @@ const playlistSchema = new mongoose.Schema({
     title: { type: String, validate: /[a-zA-Z0-9]+/, required: true },
     creator: { type: String, required: true },
     createdOn: { type: Date, default: Date.now },
-    songs: [String],
+    songs: [{
+        title: String,
+        mp3Url: String,
+        oggUrl: String
+    }],
     users: [String],
     voteUp: [String],
     voteDown: [String],
