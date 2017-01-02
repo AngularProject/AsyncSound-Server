@@ -23,10 +23,29 @@ module.exports = function({ data }) {
                         .json(song);
                 })
                 .catch(err => {
-                    const message = `Category: ${err} doesn't exist `;
+                    const message = `Song: ${err} doesn't exist `;
                     
                     res.status(404)
                         .json({error: true, message : message });
+                });
+        },
+        getSongByTitle(req, res) {
+            const string = req.params.title;
+            const title = new RegExp(["^", string, "$"].join(""), "i");
+
+            data.getSongByTitle(title)
+                .then(song => {
+                    res.status(200)
+                        .json(song);
+                })
+                .catch(err => {
+                    if(!err) {
+                        res.status(200)
+                            .json({error: true, message : "Song doesn't exists" });
+                    }
+                    
+                    res.status(404)
+                        .json({error: true, message : err });
                 });
         },
         getSongByCategory(req,res) {
@@ -39,7 +58,7 @@ module.exports = function({ data }) {
                         .json(songs);
                 })
                 .catch((err) => {
-                    const message = `Song: ${err} doesn't exist `;
+                    const message = `Category: ${err} doesn't exist `;
 
                     res.status(404)
                         .json({error: true, message : message });
