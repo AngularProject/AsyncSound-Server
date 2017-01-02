@@ -10,10 +10,12 @@ module.exports = function({ data }) {
                     res.status(200).json({ succes: true, message: "Add some music now!" });
                 });
         },
-        getUserPlaylists(req, res) {
+        getPlaylistsOfUser(req, res) {
             let usedId = req.params.id;
-            return data.getUserPlaylists(usedId)
+            // console.log(usedId);
+            return data.getPlaylistByCreator(usedId)
                 .then(playlists => {
+                    console.log(playlists);
                     res.status(200).json(playlists);
                 });
         }

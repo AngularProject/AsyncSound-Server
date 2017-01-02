@@ -148,6 +148,25 @@ module.exports = function(models) {
                     return resolve(updatedPlaylist);
                 });
             });
+        },
+        getUserPlaylists(id) {
+            return new Promise((resolve, reject) => {
+                console.log(id);
+                Playlist.find({ _id: id }, (err, playlist) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    console.log(15);
+
+                    // if (playlist.length === 0) {
+
+                    //     return reject(playlist);
+                    // }
+                    console.log(16);
+
+                    return resolve(playlist);
+                });
+            });
         }
     };
 };

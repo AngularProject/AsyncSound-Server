@@ -8,7 +8,7 @@ module.exports = function({ app, data }) {
     const router = express.Router();
 
     router
-        .get("/user-playlists/:id", controller.getUserPlaylists)
+        .get("/user-playlists/:id", controller.getPlaylistsOfUser)
         .post("/playlist/add", controller.addNewPlaylist);
 
 
