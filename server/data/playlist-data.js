@@ -28,7 +28,7 @@ module.exports = function(models) {
                     return resolve(user);
                 });
             });
-        },        
+        },
         getPlaylistById(playlistId) {
             return new Promise((resolve, reject) => {
 
@@ -49,7 +49,7 @@ module.exports = function(models) {
         },
         addSongToPlaylist(info) {
 
-            const id = { _id : info.id};
+            const id = { _id: info.id };
 
             const update = {
                 $push: { "songs": info.song }
@@ -58,8 +58,8 @@ module.exports = function(models) {
             const options = { upsert: false };
 
             return new Promise((resolve, reject) => {
-                Playlist.findOneAndUpdate( id, update, options, (err, updatedPlaylist) => {
-                    
+                Playlist.findOneAndUpdate(id, update, options, (err, updatedPlaylist) => {
+
                     if (err) {
                         return reject(err);
                     }
@@ -70,7 +70,7 @@ module.exports = function(models) {
         },
         removeSongFromPlaylist(info) {
 
-            const id = { _id : info.id};
+            const id = { _id: info.id };
 
             const update = {
                 $pull: { "songs": info.song }
@@ -79,8 +79,8 @@ module.exports = function(models) {
             const options = { upsert: false };
 
             return new Promise((resolve, reject) => {
-                Playlist.findOneAndUpdate( id, update, options, (err, updatedPlaylist) => {
-                    
+                Playlist.findOneAndUpdate(id, update, options, (err, updatedPlaylist) => {
+
                     if (err) {
                         return reject(err);
                     }
@@ -91,7 +91,7 @@ module.exports = function(models) {
         },
         addUserToPlaylist(info) {
 
-            const id = { _id : info.id};
+            const id = { _id: info.id };
 
             const update = {
                 $push: { "users": info.user }
@@ -100,8 +100,8 @@ module.exports = function(models) {
             const options = { upsert: false };
 
             return new Promise((resolve, reject) => {
-                Playlist.findOneAndUpdate( id, update, options, (err, updatedPlaylist) => {
-                    
+                Playlist.findOneAndUpdate(id, update, options, (err, updatedPlaylist) => {
+
                     if (err) {
                         return reject(err);
                     }
@@ -112,7 +112,7 @@ module.exports = function(models) {
         },
         removeUserFromPlaylist(info) {
 
-            const id = { _id : info.id};
+            const id = { _id: info.id };
 
             const update = {
                 $pull: { "users": info.user }
@@ -121,13 +121,31 @@ module.exports = function(models) {
             const options = { upsert: false };
 
             return new Promise((resolve, reject) => {
-                Playlist.findOneAndUpdate( id, update, options, (err, updatedPlaylist) => {
-                    
+                Playlist.findOneAndUpdate(id, update, options, (err, updatedPlaylist) => {
+
                     if (err) {
                         return reject(err);
                     }
 
                     return resolve(updatedPlaylist);
+                });
+            });
+        },
+        getUserPlaylists(userId) {
+            return new Promise((resolve, reject) => {
+
+                Playlist.find({ creator: userId }, (err, playlist) => {
+                    if (err) {
+
+                        return reject(err);
+                    }
+
+                    if (!playlist) {
+
+                        return reject(playlist);
+                    }
+
+                    return resolve(playlist);
                 });
             });
         }

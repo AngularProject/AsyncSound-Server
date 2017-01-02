@@ -4,9 +4,9 @@
 const mongoose = require("mongoose");
 
 const playlistSchema = new mongoose.Schema({
-    title: { type: String, validate: /[a-zA-Z0-9]+/, required: true},
+    title: { type: String, validate: /[a-zA-Z0-9]+/, required: true },
     creator: { type: String, required: true },
-    createdOn: {type: Date, default: Date.now},
+    createdOn: { type: Date, default: Date.now },
     songs: [String],
     users: [String],
     voteUp: [String],
@@ -18,8 +18,8 @@ const playlistSchema = new mongoose.Schema({
         likedBy: [String],
         dislikedBy: [String]
     }],
-    isPublic: { type: Boolean, required: true },
-    isDeleted: { type: Boolean, required: true }
+    isPublic: { type: Boolean },
+    isDeleted: { type: Boolean }
 });
 
 
@@ -44,13 +44,13 @@ playlistSchema.methods.isUserAddedPlaylist = function(username) {
 playlistSchema.methods.isUserVoteUpPlaylist = function(username) {
     let isUserVote = this.voteUp.includes(username);
 
-    return isUserVote;   
+    return isUserVote;
 };
 
 playlistSchema.methods.isUserVoteDownPlaylist = function(username) {
     let isUserVote = this.voteDown.includes(username);
 
-    return isUserVote;   
+    return isUserVote;
 };
 
 // // WRONG CHECK
@@ -60,14 +60,13 @@ playlistSchema.methods.isUserLikedComment = function(username) {
     let isUserExist = false;
 
     for (var comment in this.comments) {
-        if(this.comments[comment].likedBy.some((x)=> x === username))
-        {
+        if (this.comments[comment].likedBy.some((x) => x === username)) {
             isUserExist = true;
             break;
-        }  
+        }
     }
 
-    return isUserExist;    
+    return isUserExist;
 };
 
 // WRONG CHECK
@@ -75,14 +74,13 @@ playlistSchema.methods.isUserDislikedComment = function(username) {
     let isUserExist = false;
 
     for (var comment in this.comments) {
-        if(this.comments[comment].likedBy.some((x)=> x === username))
-        {
+        if (this.comments[comment].likedBy.some((x) => x === username)) {
             isUserExist = true;
             break;
-        }  
+        }
     }
 
-    return isUserExist;    
+    return isUserExist;
 };
 
 mongoose.model("playlist", playlistSchema);
