@@ -83,7 +83,13 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    return resolve(foundUser);
+                    User.findOne({ username: foundUser.username }, (err, user) => {
+                        if(err) {
+                            return reject(err);
+                        }
+
+                        return resolve(user);
+                    });
                 });
             });
         },
