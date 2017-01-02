@@ -150,20 +150,13 @@ module.exports = function(models) {
                 });
             });
         },
-        getUserPlaylists(id) {
+        getUserPlaylists(playlistIds) {
             return new Promise((resolve, reject) => {
-                console.log(id);
-                Playlist.find({ _id: id }, (err, playlist) => {
+                // console.log(playlistIds);
+                Playlist.find({ _id: { $in: playlistIds } }, (err, playlist) => {
                     if (err) {
                         return reject(err);
                     }
-                    console.log(15);
-
-                    // if (playlist.length === 0) {
-
-                    //     return reject(playlist);
-                    // }
-                    console.log(16);
 
                     return resolve(playlist);
                 });

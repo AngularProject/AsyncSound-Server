@@ -11,7 +11,8 @@ module.exports = function({ app, data }) {
         .get("/playlists", controller.getAllPlaylists)
         .get("/user-playlists/:id", controller.getPlaylistsOfUser)
         .post("/playlist/add", controller.addNewPlaylist)
-        .post("/pin-playlist", controller.pinPlaylist);
+        .post("/pin-playlist", controller.pinPlaylist)
+        .post("/unpin-playlist", controller.unpinPlaylist);
 
     app.use("/", router);
 };

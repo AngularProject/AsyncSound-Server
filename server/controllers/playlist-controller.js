@@ -19,12 +19,24 @@ module.exports = function({ data }) {
                 });
         },
         getPlaylistsOfUser(req, res) {
-            let usedId = req.params.id;
-            // console.log(usedId);
-            return data.getPlaylistByCreator(usedId)
-                .then(playlists => {
-                    console.log(playlists);
+            let username = req.params.id;
+            // console.log(22);
+            // console.log(userId);
+            // console.log(req.params);
+            // return data.getPlaylistByCreator(usedId)
+            //     .then(playlists => {
+            //         console.log(playlists);
+            //         res.status(200).json(playlists);
+            //     });
+
+            return data.getCurrentUserPlaylists(username)
+                .then((playlistIds) => {
+                    return data.getUserPlaylists(playlistIds[0].playlists);
+
+                })
+                .then((playlists) => {
                     res.status(200).json(playlists);
+
                 });
         },
         getAllPlaylists(req, res) {
@@ -36,22 +48,34 @@ module.exports = function({ data }) {
         pinPlaylist(req, res) {
             let user = req.body.user;
             let id = req.body.playlist._id;
-            // console.log("HERE");
-            // console.log(req.body);
-            let info = {
-                user,
-                id
-            };
+            // let info = {
+            //     user,
+            //     id
+            // };
             let query = { username: user };
-            let updateObject = { $push: { playlists: id } };
+            let updateObject = { $push: { "playlists": id } };
 
             return data.findUserAndUpdate(updateObject, query)
+                .then((user) => {
+                    // console.log(user);
+                    res.status(200).json({ succes: true, message: user.name + " Playlist pinned" });
+                })
+        },
+        unpinPlaylist(req, res) {
+            let user = req.body.user;
+            let id = req.body.playlist._id;
+            // let info = {
+            //     user,
+            //     id
+            // };
+            let query = { username: user };
+            let updateObject = { $pull: { "playlists": id } };
 
-            // return data.addUserToPlaylist(info)
-            .then((user) => {
-                console.log(playlist);
-                res.status(200).json({ succes: true, message: user.name + " Playlist pinned" });
-            })
+            return data.findUserAndUpdate(updateObject, query)
+                .then((user) => {
+                    // console.log(user);
+                    res.status(200).json({ succes: true, message: user.name + " Playlist unpinned" });
+                })
         }
     };
 };
