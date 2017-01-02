@@ -26,6 +26,7 @@ module.exports = function({ app, data }) {
                 <input type="submit" value="Sing up">
             </form>`))
         .get("/logout", authController.logoutUser)        
+        .post("/edit", authController.isAuthenticated, authController.updateUserProfile)
         .post("/register", authController.isNotAuthenticated, authController.registerUser)
         .post("/login", authController.loginUser);
 
