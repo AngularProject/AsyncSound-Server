@@ -35,7 +35,7 @@ module.exports = function(models) {
 
                     if (song.length === 0) {
 
-                        return reject(song);
+                        return reject(false);
                     }
 
                     return resolve(song);
