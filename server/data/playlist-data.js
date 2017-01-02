@@ -6,6 +6,7 @@ module.exports = function(models) {
 
     return {
         createPlaylist(playlistInfo) {
+            // console.log(playlistInfo.creator.username);
 
             const playlist = new Playlist({
                 title: playlistInfo.title,
@@ -166,6 +167,17 @@ module.exports = function(models) {
 
                     return resolve(playlist);
                 });
+            });
+        },
+        getAllPlaylists() {
+            return new Promise((resolve, reject) => {
+                Playlist.find({}, (err, playlists) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(playlists);
+                })
             });
         }
     };

@@ -8,9 +8,9 @@ module.exports = function({ app, data }) {
     const router = express.Router();
 
     router
+        .get("/playlists", controller.getAllPlaylists)
         .get("/user-playlists/:id", controller.getPlaylistsOfUser)
         .post("/playlist/add", controller.addNewPlaylist);
-
 
     app.use("/", router);
 };
