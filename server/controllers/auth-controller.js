@@ -50,6 +50,35 @@ module.exports = function({ data, passport }) {
 
             auth(req, res, next);
         },
+        updateUserProfile(req,res) {
+            let user = { username: req.body.username };
+            let newUserData = {};
+
+            if(req.body.firstname) {
+                newUserData.firstname = req.body.firstname;
+            }
+            if(req.body.lastname) {
+                newUserData.lastname = req.body.lastname;
+            }
+            if(req.body.email) {
+                newUserData.email = req.body.email;
+            }
+            if(req.body.password) {
+                const salt = encrypt.generateSalt();
+                newUserData.salt = salt,
+                newUserData.passHash = encrypt.hashPassword(salt, req.body.password || encrypt.genenerateRandomPassword());
+            }
+
+            return data.findUserAndUpdate(newUserData, user)
+                .then((updatedUser) => {
+                    
+                    res.status(200).json(updatedUser);
+                })
+                .catch(err => {
+                    res.status(404)
+                        .json({error: true, message : err });
+                });
+        },
         logoutUser(req, res) {
             req.logout();
             res.status(200).redirect("/home");
