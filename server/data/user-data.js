@@ -119,6 +119,19 @@ module.exports = function(models) {
                     return resolve(user);
                 });
             });
+        },
+        getCurrentUserPlaylists(username) {
+            return new Promise((resolve, reject) => {
+                User.find({ username: username })
+                    .select('playlists')
+                    .exec((err, playlists) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        // console.log(playlists);
+                        return resolve(playlists);
+                    });
+            });
         }
     };
 };

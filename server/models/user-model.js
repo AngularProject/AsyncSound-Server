@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     roles: { type: [String] },
     firstname: { type: String, validate: /[a-zA-Z]+/, required: true },
     lastname: { type: String, validate: /[a-zA-Z]+/, required: true },
-    avatar: { type: String, default: "default-avatar.png" }
+    avatar: { type: String, default: "default-avatar.png" },
+    playlists: { type: [String] }
 });
 
 mongoose.model("user", userSchema);
