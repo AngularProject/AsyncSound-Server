@@ -11,9 +11,9 @@ module.exports = function({ data }) {
                 })
                 .catch(err => {
                     const message = `Username: ${err} doesn't exist `;
-
+                    
                     res.status(404)
-                        .json({ error: true, message: message });
+                        .json({error: true, message : message });
                 });
         },
         getSongById(req, res) {
@@ -23,43 +23,62 @@ module.exports = function({ data }) {
                         .json(song);
                 })
                 .catch(err => {
-                    const message = `Category: ${err} doesn't exist `;
-
+                    const message = `Song: ${err} doesn't exist `;
+                    
                     res.status(404)
-                        .json({ error: true, message: message });
+                        .json({error: true, message : message });
                 });
         },
-        getSongByCategory(req, res) {
+        getSongByTitle(req, res) {
+            const string = req.params.title;
+            const title = new RegExp(["^", string, "$"].join(""), "i");
+
+            data.getSongByTitle(title)
+                .then(song => {
+                    res.status(200)
+                        .json(song);
+                })
+                .catch(err => {
+                    if(!err) {
+                        res.status(200)
+                            .json({error: true, message : "Song doesn't exists" });
+                    }
+                    
+                    res.status(404)
+                        .json({error: true, message : err });
+                });
+        },
+        getSongByCategory(req,res) {
             const string = req.params.name;
             const category = new RegExp(["^", string, "$"].join(""), "i");
-
+            
             data.getSongsByCategory(category)
                 .then(songs => {
                     res.status(200)
                         .json(songs);
                 })
                 .catch((err) => {
-                    const message = `Song: ${err} doesn't exist `;
+                    const message = `Category: ${err} doesn't exist `;
 
                     res.status(404)
-                        .json({ error: true, message: message });
+                        .json({error: true, message : message });
                 });
         },
-        getAllSongs(req, res) {
+        getAllSongs(req,res) {
             data.getAllSongs()
                 .then(songs => {
                     res.status(200)
                         .json(songs);
                 })
                 .catch((err) => {
-
+                    
                     res.status(404)
-                        .json({ error: true, message: err });
+                        .json({error: true, message : err });
                 });
         },
         getPlaylistByUsername(req, res) {
             const username = req.params.creator;
-            console.log(username);
+
             data.getPlaylistByCreator(username)
                 .then(playlists => {
                     res.status(200)
@@ -67,10 +86,10 @@ module.exports = function({ data }) {
                 })
                 .catch(err => {
                     res.status(404)
-                        .json({ error: true, message: err });
+                        .json({error: true, message : err });
                 });
         },
-        addSongToPlaylist(req, res) {
+        addSongToPlaylist(req,res) {
             const body = req.body;
 
             data.addSongToPlaylist(body)
@@ -80,7 +99,7 @@ module.exports = function({ data }) {
                 })
                 .catch(err => {
                     res.status(404)
-                        .json({ error: true, message: err });
+                        .json({error: true, message : err });
                 });
         },
         uploadAvatar(req, res, img) {
