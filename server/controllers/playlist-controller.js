@@ -58,7 +58,7 @@ module.exports = function({ data }) {
             return data.findUserAndUpdate(updateObject, query)
                 .then((user) => {
                     // console.log(user);
-                    res.status(200).json({ succes: true, message: user.name + " Playlist pinned" });
+                    res.status(200).json({ succes: true, message: "Playlist pinned" });
                 })
         },
         unpinPlaylist(req, res) {
