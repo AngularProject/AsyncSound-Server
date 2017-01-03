@@ -6,55 +6,14 @@ const songs = require('./server/utils/songsfeed');
 
 require("./server/routers")({ app, data, validator });
 
-// For testing purposes
-// ====================
-const adminUser = {
-    username: "admin",
-    email: "admin@async-sound.com",
-    password: "pass",
-    firstname: "async",
-    lastname: "sound",
-};
 
-const playlist = {
-    title: "AsyncSound",
-    creator: "admin",
-    createdOn: Date.now(),
-    isPublic: "false"
-};
-
-data.getPlaylistByCreator("admin")
-    .then(playlist => {
-        console.log(playlist);
-    })
-    .catch(()=> {
-        data.createPlaylist(playlist);
-    });
-// const update = {
-//     id : "58612df51266cc195c23e45d",
-//     user : "moderator"
-// };
-
-data.getUserByUsername("admin")
-    .then((user) => {
-        console.log(user);
+data.getSongsByCategory("bass")
+    .then(song => {
+        console.log(song);
     })
     .catch(() => {
-        data.createUser(adminUser);
+        data.createManySongs(songs);
     });
-
-// data.getSongsByCategory("bass")
-//     .then(song => {
-//         console.log(song);
-//     })
-//     .catch(() => {
-//         data.createManySongs(songs);
-//     });
-// data.removeUserFromPlaylist(update)
-//     .then(res => {
-//         console.log(res);
-//     });
-// ====================
 
 app.listen(config.port, () => {
     console.log(`Application listen on port: ${config.port}`);
